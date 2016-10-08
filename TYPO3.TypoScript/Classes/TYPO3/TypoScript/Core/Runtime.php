@@ -349,6 +349,23 @@ class Runtime
         return $this->canRenderWithConfiguration($typoScriptConfiguration);
     }
 
+	/**
+	 * Determine if a prototype is defined in the current AST
+	 *
+	 * @param string $prototypeName
+	 * @return boolean
+	 */
+	public function prototypeExists($prototypeName)
+	{
+		$configuration = $this->typoScriptConfiguration;
+
+		if (isset($configuration['__prototypes']) && is_array($configuration['__prototypes'])) {
+			return isset($configuration['__prototypes'][$prototypeName]);
+		}
+
+		return false;
+	}
+
     /**
      * Internal evaluation if given configuration is renderable.
      *
