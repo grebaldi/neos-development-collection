@@ -104,6 +104,19 @@ class ContentElementWrappingService
     }
 
     /**
+     * @param string $content
+     * @param OutOfBandMode $outOfBandMode
+     * @return string
+     */
+    public function addOutOfBandMode(string $content, OutOfBandMode $outOfBandMode): string
+    {
+        $attributes = [
+            'data-node-__fusion-out-of-band-mode' => (string) $outOfBandMode
+        ];
+        return $this->htmlAugmenter->addAttributes($content, $attributes, 'div');
+    }
+
+    /**
      * Adds node properties to the given $attributes collection and returns the extended array
      *
      * @param array $attributes

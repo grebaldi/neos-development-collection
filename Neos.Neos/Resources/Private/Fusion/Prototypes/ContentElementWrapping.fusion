@@ -11,4 +11,6 @@ prototype(Neos.Neos:ContentElementWrapping) {
   additionalAttributes = Neos.Fusion:DataStructure
   # This should only be set to true to render the metadata for the currently rendered document node as that is treated differently.
   renderCurrentDocumentMetadata = false
+  # self | embedded | document
+  outOfBandMode = 'self'
 }

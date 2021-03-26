@@ -17,6 +17,7 @@ use Neos\Neos\Domain\Service\ContentContext;
 use Neos\Neos\Service\ContentElementWrappingService;
 use Neos\ContentRepository\Domain\Model\NodeInterface;
 use Neos\Fusion\FusionObjects\AbstractFusionObject;
+use Neos\Neos\Service\OutOfBandMode;
 
 /**
  * Adds meta data attributes to the processed Content Element
@@ -56,6 +57,16 @@ class ContentElementWrappingImplementation extends AbstractFusionObject
     }
 
     /**
+     * @return OutOfBandMode
+     */
+    public function getOutOfBandMode(): OutOfBandMode
+    {
+        return OutOfBandMode::fromString(
+            $this->fusionValue('outOfBandMode') ?? 'self'
+        );
+    }
+
+    /**
      * Evaluate this Fusion object and return the result
      *
      * @return mixed
@@ -83,6 +94,8 @@ class ContentElementWrappingImplementation extends AbstractFusionObject
         if ($node->isRemoved()) {
             $content = '';
         }
+
+        $content = $this->contentElementWrappingService->addOutOfBandMode($content, $this->getOutOfBandMode());
 
         if ($this->fusionValue('renderCurrentDocumentMetadata')) {
             return $this->contentElementWrappingService->wrapCurrentDocumentMetadata($node, $content, $this->getContentElementFusionPath(), $this->getAdditionalAttributes());
